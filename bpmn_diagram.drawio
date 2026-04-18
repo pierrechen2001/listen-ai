@@ -1,0 +1,169 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== POOL ==================== -->
+    <mxCell id="pool" value="ListenAI × 四葉草書局 合作流程" style="shape=pool;startSize=20;horizontal=1;childLayout=stackLayout;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneHead=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="40" y="40" width="1560" height="680" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== SWIMLANES ==================== -->
+    <mxCell id="lane1" value="使用者" style="swimlane;startSize=30;horizontal=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="pool">
+      <mxGeometry y="20" width="1560" height="120" as="geometry" />
+    </mxCell>
+    <mxCell id="lane2" value="四葉草書評" style="swimlane;startSize=30;horizontal=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="pool">
+      <mxGeometry y="140" width="1560" height="120" as="geometry" />
+    </mxCell>
+    <mxCell id="lane3" value="四葉草書店&#xa;資料分析師" style="swimlane;startSize=30;horizontal=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="pool">
+      <mxGeometry y="260" width="1560" height="140" as="geometry" />
+    </mxCell>
+    <mxCell id="lane4" value="四葉草書店&#xa;零售人員" style="swimlane;startSize=30;horizontal=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="pool">
+      <mxGeometry y="400" width="1560" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="lane5" value="出版社" style="swimlane;startSize=30;horizontal=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="pool">
+      <mxGeometry y="530" width="1560" height="130" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== LANE 1: 使用者 ==================== -->
+    <!-- Start Event -->
+    <mxCell id="start" value="開始閱讀書籍" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="lane1">
+      <mxGeometry x="60" y="40" width="50" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 撰寫書評 -->
+    <mxCell id="u1" value="撰寫書評" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane1">
+      <mxGeometry x="160" y="40" width="100" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 發布評論 -->
+    <mxCell id="u2" value="發布評論至&#xa;四葉草書評" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane1">
+      <mxGeometry x="320" y="40" width="100" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== LANE 2: 四葉草書評 ==================== -->
+    <!-- Task: 收錄評論 -->
+    <mxCell id="b1" value="收錄書評至&#xa;資料庫" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane2">
+      <mxGeometry x="480" y="35" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: ListenAI 爬取資料 -->
+    <mxCell id="b2" value="ListenAI&#xa;擷取書評資料" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane2">
+      <mxGeometry x="640" y="35" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 情感分析 (NLP) -->
+    <mxCell id="b3" value="NLP 情感分析&#xa;（正/中/負）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane2">
+      <mxGeometry x="800" y="35" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 詞頻統計 -->
+    <mxCell id="b4" value="詞頻統計&#xa;與趨勢分析" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane2">
+      <mxGeometry x="960" y="35" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 產生分析報告 -->
+    <mxCell id="b5" value="產生分析報告" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane2">
+      <mxGeometry x="1120" y="35" width="110" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== LANE 3: 資料分析師 ==================== -->
+    <!-- Task: 檢視 ListenAI Dashboard -->
+    <mxCell id="a1" value="檢視 ListenAI&#xa;Dashboard" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane3">
+      <mxGeometry x="1120" y="45" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Gateway: 結果是否可信 -->
+    <mxCell id="gw1" value="結果可信？" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="lane3">
+      <mxGeometry x="1280" y="35" width="90" height="70" as="geometry" />
+    </mxCell>
+    <!-- Task: 人工審核重新標註 -->
+    <mxCell id="a2" value="人工審核&#xa;重新標註" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane3">
+      <mxGeometry x="1280" y="0" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 提交備貨建議 -->
+    <mxCell id="a3" value="提交備貨建議" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane3">
+      <mxGeometry x="1420" y="45" width="110" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== LANE 4: 零售人員 ==================== -->
+    <!-- Task: 接收備貨建議 -->
+    <mxCell id="r1" value="接收備貨建議" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane4">
+      <mxGeometry x="1420" y="40" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Gateway: 庫存足夠？ -->
+    <mxCell id="gw2" value="庫存足夠？" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="lane4">
+      <mxGeometry x="1280" y="30" width="90" height="70" as="geometry" />
+    </mxCell>
+    <!-- Task: 上架熱門書籍 -->
+    <mxCell id="r2" value="上架熱門書籍" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane4">
+      <mxGeometry x="1140" y="40" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 向出版社下訂單 -->
+    <mxCell id="r3" value="向出版社&#xa;下訂單" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane4">
+      <mxGeometry x="1140" y="0" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- End Event: 銷售完成 -->
+    <mxCell id="end1" value="銷售完成" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=3;" vertex="1" parent="lane4">
+      <mxGeometry x="1000" y="40" width="50" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== LANE 5: 出版社 ==================== -->
+    <!-- Task: 接收訂單 -->
+    <mxCell id="p1" value="接收訂單" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane5">
+      <mxGeometry x="1140" y="40" width="110" height="50" as="geometry" />
+    </mxCell>
+    <!-- Task: 備貨出貨 -->
+    <mxCell id="p2" value="備貨並出貨" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="lane5">
+      <mxGeometry x="1000" y="40" width="110" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== FLOWS ==================== -->
+    <!-- 使用者 flows -->
+    <mxCell id="f1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="start" target="u1" parent="lane1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="u1" target="u2" parent="lane1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Cross-lane: 使用者 → 四葉草書評 -->
+    <mxCell id="f3" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="u2" target="b1" parent="pool">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- 四葉草書評 internal flows -->
+    <mxCell id="f4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="b1" target="b2" parent="lane2"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="b2" target="b3" parent="lane2"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="b3" target="b4" parent="lane2"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="b4" target="b5" parent="lane2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Cross-lane: 四葉草書評 → 資料分析師 -->
+    <mxCell id="f8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="b5" target="a1" parent="pool">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- 資料分析師 flows -->
+    <mxCell id="f9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="a1" target="gw1" parent="lane3"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f10" value="否" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="gw1" target="a2" parent="lane3"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <!-- 人工審核 loop back to NLP -->
+    <mxCell id="f10b" value="重新分析" style="edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;entryX=0.5;entryY=0;curved=1;" edge="1" source="a2" target="b3" parent="pool">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="f11" value="是" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="gw1" target="a3" parent="lane3"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Cross-lane: 資料分析師 → 零售人員 -->
+    <mxCell id="f12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="a3" target="r1" parent="pool">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- 零售人員 flows -->
+    <mxCell id="f13" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="r1" target="gw2" parent="lane4"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f14" value="是" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="gw2" target="r2" parent="lane4"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f14b" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="r2" target="end1" parent="lane4"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f15" value="否" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="gw2" target="r3" parent="lane4"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Cross-lane: 零售人員 → 出版社 -->
+    <mxCell id="f16" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="r3" target="p1" parent="pool">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- 出版社 flows -->
+    <mxCell id="f17" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="p1" target="p2" parent="lane5"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Cross-lane: 出版社 → 零售人員 (到貨後上架) -->
+    <mxCell id="f18" value="到貨" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="p2" target="r2" parent="pool">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
