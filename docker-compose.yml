@@ -1,0 +1,61 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - GATEWAY_URL=http://gateway:8000
+    depends_on:
+      - gateway
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - GATEWAY_PORT=8000
+      - STAT_URL=http://stat:8002
+      - NLP_URL=http://nlp:8001
+      - JWT_SECRET=supersecret
+      - DEMO_USER=admin
+      - DEMO_PASS=admin123
+    depends_on:
+      - stat
+      - nlp
+    restart: unless-stopped
+
+  nlp:
+    build:
+      context: ./nlp
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+
+  stat:
+    build:
+      context: ./stat
+    ports:
+      - "8002:8002"
+    environment:
+      - STAT_PORT=8002
+      - SQLITE_PATH=/data/listenai.db
+    volumes:
+      - listenai_data:/data
+    restart: unless-stopped
+
+  # Run with: docker compose --profile init run --rm import
+  # Requires posts.csv to be placed in ./data/ first
+  import:
+    image: python:3.11-slim
+    volumes:
+      - listenai_data:/data
+      - ./data:/scripts:ro
+    command: python /scripts/import_posts.py --db /data/listenai.db --csv /scripts/posts.csv
+    profiles:
+      - init
+
+volumes:
+  listenai_data:
