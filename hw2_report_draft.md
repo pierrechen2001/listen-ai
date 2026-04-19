@@ -205,6 +205,8 @@ afa2f1f022b5   listen-ai-nlp        "sh -c 'uvicorn app:…"   ...   Up   0.0.0.
 | listen-ai-nlp | Python | python:3.11-slim | **250 MB** |
 | listen-ai-stat | Go | golang:1.23-alpine → alpine | **35 MB** |
 
+> 實際測量值（`docker images | grep listen-ai`）：frontend=800MB, gateway=329MB, nlp=250MB, stat=35MB
+
 **分析：**
 
 差異最顯著的是 **stat（Go）**，僅 35 MB，其餘三者均在數百 MB 級別。原因如下：
@@ -240,9 +242,9 @@ RUN pip install --no-cache-dir -r requirements.txt   # ← 依賴層，前層失
 
 | 情況 | Build 時間 |
 |------|-----------|
-| 初次 build（無 cache 基準） | ~210 s |
-| **正確順序**，修改程式碼後重 build | **4 s** |
-| **調換順序**，修改程式碼後重 build | **227 s** |
+| 初次 build（無 cache 基準） | ~100 s |
+| **正確順序**，修改程式碼後重 build | **< 1 s** |
+| **調換順序**，修改程式碼後重 build | **76 s** |
 
 **原因分析：**
 
@@ -263,15 +265,15 @@ Docker 採用 **layer-by-layer caching** 策略：某一層的內容發生改變
 
 | Base Image | Build 時間（無 cache） | Image 大小 |
 |-----------|----------------------|-----------|
-| `python:3.11`（full） | ~230 s | **~1.7 GB** |
-| `python:3.11-slim` | ~230 s | **~800 MB** |
+| `python:3.11`（full） | **119 s** | **2.19 GB** |
+| `python:3.11-slim` | **98 s** | **800 MB** |
 
 **原因分析：**
 
-Build 時間相近，因為兩者都需下載並安裝相同的 Python 套件（streamlit、pandas 等）。差異主要體現在 **Image 大小**：
+Build 時間相近（full=119s，slim=98s），差異主要體現在 **Image 大小**：
 
-- `python:3.11`（full）基於 Debian，預裝完整的系統工具鏈（gcc、make、build-essential、curl、git 等），基礎 image 約 1.0 GB；加上應用依賴後達 ~1.7 GB。
-- `python:3.11-slim` 僅保留 Python 執行環境所需的最小系統套件，基礎 image 約 95 MB；加上應用依賴後約 800 MB，**節省約 53% 空間**。
+- `python:3.11`（full）基於 Debian，預裝完整的系統工具鏈（gcc、make、build-essential、curl、git 等），基礎 image 約 1.0 GB；加上應用依賴後達 **2.19 GB**。
+- `python:3.11-slim` 僅保留 Python 執行環境所需的最小系統套件，基礎 image 約 95 MB；加上應用依賴後約 **800 MB**，**節省約 63% 空間**。
 
 由於 ListenAI 的 Python 服務（frontend / nlp）不需編譯 C extension，也不需要系統工具，`python:3.11-slim` 完全足夠，且在 CI/CD 推送與 cloud 部署時能顯著節省頻寬與儲存成本，應優先採用。
 
