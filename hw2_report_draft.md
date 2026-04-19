@@ -1,6 +1,7 @@
 # 114-2 系統分析與設計 作業二
+
 **姓名：陳冠宇**
-**GitHub Repository：https://github.com/pierrechen2001/listen-ai**
+**GitHub Repository：[https://github.com/pierrechen2001/listen-ai](https://github.com/pierrechen2001/listen-ai)**
 
 ---
 
@@ -12,7 +13,7 @@
 
 **1-2. Fork 後的 GitHub Repository 連結**
 
-https://github.com/pierrechen2001/listen-ai
+[https://github.com/pierrechen2001/listen-ai](https://github.com/pierrechen2001/listen-ai)
 
 **3-6. 本地執行與截圖**
 
@@ -175,11 +176,13 @@ volumes:
 #### 2.7 docker ps 截圖
 
 執行指令：
+
 ```bash
 docker ps --all --filter label=com.docker.compose.project
 ```
 
 > **[截圖 2-7]**
+
 ```
 CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                    NAMES
 36b4ee4eb7c0   listen-ai-frontend   "streamlit run app.p…"   ...   Up   0.0.0.0:8501->8501/tcp   listen-ai-frontend-1
@@ -198,12 +201,14 @@ afa2f1f022b5   listen-ai-nlp        "sh -c 'uvicorn app:…"   ...   Up   0.0.0.
 
 > **[截圖 3-1]**
 
-| 服務 | 程式語言 | Base Image | Image 大小 |
-|------|----------|-----------|-----------|
-| listen-ai-frontend | Python | python:3.11-slim | **800 MB** |
-| listen-ai-gateway | Node.js | node:20-slim | **329 MB** |
-| listen-ai-nlp | Python | python:3.11-slim | **250 MB** |
-| listen-ai-stat | Go | golang:1.23-alpine → alpine | **35 MB** |
+
+| 服務                 | 程式語言    | Base Image                  | Image 大小   |
+| ------------------ | ------- | --------------------------- | ---------- |
+| listen-ai-frontend | Python  | python:3.11-slim            | **800 MB** |
+| listen-ai-gateway  | Node.js | node:20-slim                | **329 MB** |
+| listen-ai-nlp      | Python  | python:3.11-slim            | **250 MB** |
+| listen-ai-stat     | Go      | golang:1.23-alpine → alpine | **35 MB**  |
+
 
 > 實際測量值（`docker images | grep listen-ai`）：frontend=800MB, gateway=329MB, nlp=250MB, stat=35MB
 
@@ -224,6 +229,7 @@ afa2f1f022b5   listen-ai-nlp        "sh -c 'uvicorn app:…"   ...   Up   0.0.0.
 以 frontend 為例，對應用程式碼做任意修改後，比較以下兩種 Dockerfile 的重 build 時間：
 
 **正確順序（Correct Order）**
+
 ```dockerfile
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt   # ← 依賴層，code 不變時 cache HIT
@@ -231,6 +237,7 @@ COPY . .                                              # ← code 層，修改後
 ```
 
 **調換順序（Swapped Order）**
+
 ```dockerfile
 COPY . .                                              # ← code 層，修改後 invalidate
 RUN pip install --no-cache-dir -r requirements.txt   # ← 依賴層，前層失效故強制重跑
@@ -240,11 +247,13 @@ RUN pip install --no-cache-dir -r requirements.txt   # ← 依賴層，前層失
 
 > **[截圖 3-2]** 兩次 build 的 terminal 輸出
 
-| 情況 | Build 時間 |
-|------|-----------|
-| 初次 build（無 cache 基準） | ~100 s |
+
+| 情況                     | Build 時間  |
+| ---------------------- | --------- |
+| 初次 build（無 cache 基準）   | ~100 s    |
 | **正確順序**，修改程式碼後重 build | **< 1 s** |
-| **調換順序**，修改程式碼後重 build | **76 s** |
+| **調換順序**，修改程式碼後重 build | **76 s**  |
+
 
 **原因分析：**
 
@@ -263,10 +272,12 @@ Docker 採用 **layer-by-layer caching** 策略：某一層的內容發生改變
 
 > **[截圖 3-3]** 兩個 image 的大小與 build 時間比較
 
-| Base Image | Build 時間（無 cache） | Image 大小 |
-|-----------|----------------------|-----------|
-| `python:3.11`（full） | **119 s** | **2.19 GB** |
-| `python:3.11-slim` | **98 s** | **800 MB** |
+
+| Base Image          | Build 時間（無 cache） | Image 大小    |
+| ------------------- | ----------------- | ----------- |
+| `python:3.11`（full） | **119 s**         | **2.19 GB** |
+| `python:3.11-slim`  | **98 s**          | **800 MB**  |
+
 
 **原因分析：**
 
@@ -332,17 +343,20 @@ docker compose up -d
 
 **五條泳道說明：**
 
-| 泳道 | 角色 | 主要職責 |
-|------|------|---------|
-| 使用者 | 書籍讀者 | 閱讀書籍後撰寫並發布書評 |
-| 四葉草書評 | 社群書評平台 | 收錄書評、觸發 ListenAI 分析流程 |
-| 四葉草書店資料分析師 | 分析決策者 | 審視 Dashboard 報告、判斷可信度、提出備貨建議 |
-| 四葉草書店零售人員 | 執行採購 | 依建議判斷庫存、完成上架或向出版社下單 |
-| 出版社 | 外部供應商 | 接收訂單、備貨後出貨給書店 |
+
+| 泳道         | 角色     | 主要職責                         |
+| ---------- | ------ | ---------------------------- |
+| 使用者        | 書籍讀者   | 閱讀書籍後撰寫並發布書評                 |
+| 四葉草書評      | 社群書評平台 | 收錄書評、觸發 ListenAI 分析流程        |
+| 四葉草書店資料分析師 | 分析決策者  | 審視 Dashboard 報告、判斷可信度、提出備貨建議 |
+| 四葉草書店零售人員  | 執行採購   | 依建議判斷庫存、完成上架或向出版社下單          |
+| 出版社        | 外部供應商  | 接收訂單、備貨後出貨給書店                |
+
 
 **流程說明：**
 
 **主要流程：**
+
 1. **書評發布**：使用者於四葉草書評平台發布書評
 2. **資料擷取**：ListenAI 自動爬取書評，存入資料庫（Stat 模組）
 3. **情感分析**：NLP 模組對書評執行正/中/負情感分類
@@ -351,13 +365,14 @@ docker compose up -d
 6. **人工審核**：資料分析師登入 Dashboard 檢視結果，判斷分析是否可信
 7. **備貨建議**：分析師確認後，提交備貨建議給零售人員
 8. **庫存判斷**：零售人員檢查庫存
-   - 庫存充足 → 直接上架熱門書籍
-   - 庫存不足 → 向出版社下訂單
+  - 庫存充足 → 直接上架熱門書籍
+  - 庫存不足 → 向出版社下訂單
 9. **出版社出貨**：出版社備貨後出貨，書店完成上架
 
 **例外處理流程（資料探勘結果誤判）：**
 
 若分析師判斷結果不可信（例如諷刺語氣被誤判為正面情感），觸發**人工重新標註**機制：
+
 - 分析師手動標記誤判樣本
 - 修正後的樣本回送 NLP 模組重新分析
 - 重新產生報告後再次審核
@@ -367,4 +382,4 @@ docker compose up -d
 
 ---
 
-*程式碼已上傳至：https://github.com/pierrechen2001/listen-ai*
+*程式碼已上傳至：[https://github.com/pierrechen2001/listen-ai](https://github.com/pierrechen2001/listen-ai)*
